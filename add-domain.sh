@@ -7,23 +7,24 @@
 # Version 1.0.2
 # Login Root First
 # Usage : ./add-domain.sh chivo.org /home/chivo/public_html/
+echo
+echo '#################################################################'
+echo '# Script automatic add domain Apache2			     	#'
+echo '# Date: 05-12-2017						#'
+echo '# Script Author : Chi Vo					#'
+echo '# Homepage : www.chivo.org					#'
+echo '# Version 1.0.3							#'
+echo '# Login Root First						#'
+echo '# Usage : ./add-domain.sh chivo.org /home/chivo/public_html/	#'
+echo '#################################################################'
+echo
 
 #Check root
-if [[ ! "$(whoami)" == "root" ]] ; then
-
-	echo "Requesting su permissions..."
-	# Run this script with sudo privs
+user=$(whoami)
+if [ ! "$user" = 'root' ]; then
+	echo 'Root permission : '
 	sudo $0 $*
-		# If running this script with su privs failed, advise to do so manually and exit
-		if [[ $? > 0 ]] ; then
-		echo
-		echo "Acquiring su permission failed!"
-		echo "Please run this script with sudo permissions!"
-		echo "(e.g. 'sudo $0' or 'sudo bash $0')"
-		echo
-		exit 1
-	fi
-exit 0
+	exit
 fi
 
 #Get parameters
