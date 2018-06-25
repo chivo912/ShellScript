@@ -8,18 +8,6 @@
 # Login Root First
 # Usage : ./del-domain.sh chivo.org
 
-echo
-echo '#################################################################'
-echo '# Script automatic delete domain Apache2			#'
-echo '# Date: 05-12-2017						#'
-echo '# Script Author : Chi Vo					#'
-echo '# Homepage : www.chivo.org					#'
-echo '# Version 1.0.1							#'
-echo '# Login Root First						#'
-echo '# Usage : ./del-domain.sh chivo.org				#'
-echo '#################################################################'
-echo
-
 #Check root
 user=$(whoami)
 if [ ! "$user" = 'root' ]; then
@@ -27,6 +15,25 @@ if [ ! "$user" = 'root' ]; then
 	sudo $0 $*
 	exit
 fi
+
+# Color
+LIGHTRED='\033[1;31m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+LIGHTGREEN='\033[1;32m'
+NC='\033[0m'
+
+echo
+echo '#################################################################'
+echo '# Script automatic delete domain Apache2			#'
+echo '# Date: 05-12-2017						#'
+echo '# Script Author : Chi Vo					#'
+echo '# Homepage : www.chivo.org					#'
+echo '# Version 1.0.2							#'
+echo '# Login Root First						#'
+echo '# Usage : ./del-domain.sh chivo.org				#'
+echo '#################################################################'
+echo
 
 #Get parameters
 domain=$1
@@ -39,7 +46,7 @@ fi
 check_domain_existed=$(grep -c "$domain" /etc/hosts)
 
 if [ "$check_domain_existed" = 0 ] ; then
-	echo 'Domain not found !'
+	echo "${RED}Domain ${LIGHTRED}$domain${RED} not found !\n"
 	exit
 fi
 
@@ -48,4 +55,4 @@ mv /tmp/hosts_bak /etc/hosts
 a2dissite $domain
 rm -f /etc/apache2/sites-available/$domain.conf
 service apache2 restart
-echo 'Domain "'$domain'" has been deleted !'
+echo "${GREEN}Domain ${LIGHTGREEN}$domain${GREEN} has been deleted !\n"
